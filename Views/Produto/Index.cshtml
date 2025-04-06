@@ -1,0 +1,27 @@
+@model IEnumerable<Gerenciador_De_Vendas.Entities.Produto>
+@{
+    ViewData["title"] = "Produtos";
+}
+<!--Fazer um css centralizado com as opcoes -->
+<h1>Página inicial de produtos</h1>
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+      <h5 class="card-title">Lista de produtos</h5>
+      <p class="card-text">Nesta rotina você pode está acessando todos produtos já cadastrado</p>
+      <a asp-action="Details" class="btn btn-primary">Ir para produtos</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+      <h5 class="card-title">Cadastrar produto</h5>
+      <p class="card-text">Nesta rotina você pode Cadastrar um novo produto</p>
+      <a asp-action="Create" class="btn btn-primary">Cadastrar produtos</a>
+      </div>
+    </div>
+  </div>
+</div>

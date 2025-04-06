@@ -1,0 +1,54 @@
+@model Gerenciador_De_Vendas.Entities.Produto;
+
+@{
+    ViewData["Title"]="Adicionando produto";
+}
+
+
+<h1>Cadastro de produtos</h1>
+<form asp-action="Create" method="post">
+    <div class="formulario">
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Nome</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Nome"/>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Descricao</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Descricao"/>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Quantidade</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="Saldo_Estoque" />
+            </div>
+        </div>
+       
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" >Validade</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" asp-for="Inclusao_Produto"  />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Preco Pago</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="PrecoCompra" />
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Preco de venda</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" asp-for="PrecoVenda" />
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </div>
+</form>
+
+<a asp-action="Index">Voltar</a>

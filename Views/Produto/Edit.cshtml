@@ -1,0 +1,49 @@
+@model Gerenciador_De_Vendas.Entities.Produto;
+
+@{
+    ViewData["Title"] = "Alterar produto";
+}
+
+<form action="" method="post">
+<div class="mb-3 row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <span asp-validation-for="Nome" class="text-danger"></span>
+    <label for="staticEmail" class="col-sm-2 col-form-label" >Nome</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="Nome" />
+        </div>
+</div>
+<div class="mb-3 row">
+    <label class="col-sm-2 col-from-label">Descricao</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" asp-for="Descricao"/>
+        </div>
+</div>
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label" >Saldo</label>
+        <div class="col-sm-10">
+            <input type="" class="form-control" asp-for="Saldo_Estoque"/>
+        </div>
+</div>
+
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label" >Data de inclusao</label>
+        <div class="col-sm-10">
+            <input type="" class="form-control" asp-for="Inclusao_Produto" readonly/>
+        </div>
+</div>
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label" >Preco Pago</label>
+        <div class="col-sm-10">
+            <input type="" class="form-control" asp-for="PrecoCompra"/>
+        </div>
+</div>
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label" >Preço de venda</label>
+        <div class="col-sm-10">
+            <input type="" class="form-control" asp-for="PrecoVenda"/>
+        </div>
+</div>
+<button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+<a asp-action="ObterProdutos">Voltar</a>

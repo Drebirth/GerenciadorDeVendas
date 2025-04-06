@@ -1,0 +1,40 @@
+@model IEnumerable<Gerenciador_De_Vendas.Entities.Produto>;
+
+    @{
+        ViewData["Title"] = "Lista de produtos";
+    }
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th class="col">@Html.DisplayNameFor(model => model.Id)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.Nome)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.Descricao)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.Saldo_Estoque)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.Inclusao_Produto)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.PrecoCompra)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.PrecoVenda)</th>
+    </tr>
+    </thead>
+    <tbody>
+     @foreach(var produto in Model){
+    <tr>
+        <td class="col">@Html.DisplayFor(model => produto.Id)</td>
+        <td class="col">@Html.DisplayFor(model => produto.Nome)</td>
+        <td class="col">@Html.DisplayFor(model => produto.Descricao)</td>
+        <td class="col">@Html.DisplayFor(model => produto.Saldo_Estoque)</td>
+        
+        <td class="col" type="Data">@Html.DisplayFor(model => produto.Inclusao_Produto)</td>
+        <td class="col">@Html.DisplayFor(model => produto.PrecoCompra)</td>
+        <td class="col">@Html.DisplayFor(model => produto.PrecoVenda)</td>
+        <td><a asp-action="AlterarProduto" class="btn btn-primary" asp-route-id="@produto.Id" >Editar</a></td>
+        <td><a asp-action="DeletarProduto" class="btn btn-danger" asp-route-id="@produto.Id" >Deletar</a></td>
+    </tr>
+    }
+   
+    </tbody>
+</table>
+
+
+
+<a asp-action="Index" class="btn btn-primary">Voltar</a>
