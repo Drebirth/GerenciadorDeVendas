@@ -15,4 +15,6 @@ public static class SessionExtension
         var value = session.GetString(key);
         return value == null ? default : JsonSerializer.Deserialize<T>(value);
     }
+
+
 }

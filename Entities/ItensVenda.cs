@@ -8,12 +8,14 @@ public class ItensVenda
 {
     [Key]
     public int Id {get;set;}
-    public List<Produto>? Produtos {get; set;}
+    public int? VendaId { get; set; }
+    public int? ProdutoId { get; set; }
+    public string? Nome { get; set; }
+    public string? Descricao { get; set; }
+    public int? Saldo_Estoque { get; set; }
+    public decimal PrecoVenda { get; set; }
+    public int Quantidade { get; set; }
+    public decimal SubTotal => PrecoVenda * Quantidade;
 
-    public int vendaId {get; set;}
-    public Produto? produto {get;set;}
 
-    public int Quantidade {get; set;}
-    public decimal ValorUnitario {get; set;}
-    public decimal subtotal => Quantidade * produto.PrecoVenda;
 }

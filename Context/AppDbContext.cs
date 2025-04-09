@@ -3,13 +3,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Gerenciador_De_Vendas.Context;
 
-public class EstoqueContext : DbContext
+public class AppDbContext : DbContext
 {
-    public EstoqueContext(DbContextOptions<EstoqueContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
 
     }
 
     public DbSet<Produto> Produtos {get;set;}
     public DbSet<Venda> Vendas {get;set;}
+    public DbSet<ItensVenda> Itens { get; set; }
+
 }

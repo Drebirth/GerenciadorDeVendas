@@ -13,7 +13,8 @@ public class Produto
     public string? Descricao {get;set;}
     public int? Saldo_Estoque {get;set;}
 
-    public DateTime Inclusao_Produto {get;set;} 
+    public DateTime Inclusao_Produto { get; set; } 
+
     public decimal? PrecoCompra {get;set;}
 
     public decimal PrecoVenda {get; set;}

@@ -15,7 +15,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddDbContext<EstoqueContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("ConexaoSQLite")));
 
 var app = builder.Build();

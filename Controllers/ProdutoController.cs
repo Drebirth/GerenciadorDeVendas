@@ -8,9 +8,9 @@ namespace Gerenciador_De_Vendas.Controllers;
 public class ProdutoController : Controller
 {
 
-    private readonly EstoqueContext _context;
+    private readonly AppDbContext _context;
 
-    public ProdutoController(EstoqueContext context)
+    public ProdutoController(AppDbContext context)
     {
         _context = context;
     }
