@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Gerenciador_De_Vendas.Controllers
 {
@@ -49,9 +50,15 @@ namespace Gerenciador_De_Vendas.Controllers
         // GET: Vendas/Create
         public IActionResult Create()
         {
-
+            var itens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
             Venda venda = new Venda();
             venda.Produtos = _context.Produtos.ToList();
+            venda.Itens = itens;
+            venda.ValorTotal = 0;
+            foreach(var produto in itens)
+            {
+                venda.ValorTotal += produto.SubTotal;
+            }
             return View(venda);
         }
 
@@ -160,24 +167,95 @@ namespace Gerenciador_De_Vendas.Controllers
             return _context.Vendas.Any(e => e.Id == id);
         }
 
-        public IActionResult Adicionar(int produtoId)
-        {
+
+
+        // Toda modificação realizada seja remover ou adicionar o produto precisa passar novamente na session
+        public IActionResult Adicionar(int produtoId,int Quantidade, ItensVenda? venda)
+        {  // Se a venda for nula, inicializa a lista de vendas
             var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
 
-            var produto = _context.Produtos.Find(produtoId  );
-            if (produto != null)
+            var produto = _context.Produtos.Find(produtoId);
+            // itemExistente é o item que já existe na lista de vendas
+            var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
+            /*
+             * Tipos por Referência: Incluem objetos como classes (List<>, arrays, etc.). Quando você atribui um tipo por referência a outra variável,
+             * ambas as variáveis apontam para o mesmo objeto na memória. Alterações feitas através de uma variável serão refletidas na outra.
+             */
+            if (itemExistente != null)
             {
-                var vendaItens = new ItensVenda
-                {
-                    ProdutoId = produto.Id,
-                    Nome = produto.Nome,
-                    Quantidade = 1,
-                    PrecoVenda = produto.PrecoVenda
-                };
-                VendaLista.Add(vendaItens);
+                // Ponteiro? 
+                // já que itemExistente é igual a VendaLista, caso seja atualizada e passamos o novo valor a lista será atualizada também 
+                // Se o item já existe, apenas atualiza a quantidade
+                itemExistente.Quantidade += Quantidade;
                 HttpContext.Session.Set("VendaLista", VendaLista);
+                return RedirectToAction("Create");
             }
-            return RedirectToAction(nameof(Index));
-        }
+            else
+            {
+                if (produto != null)
+                {
+                    var vendaItens = new ItensVenda
+                    {
+                        ProdutoId = produto.Id,
+                        Nome = produto.Nome,
+                        Quantidade = Quantidade,
+                        PrecoVenda = produto.PrecoVenda
+                    };
+                    VendaLista.Add(vendaItens);
+                    HttpContext.Session.Set("VendaLista", VendaLista);
+                }
+            }
+            return RedirectToAction("Create");
+
+
+                    //var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
+
+                    //var produto = _context.Produtos.Find(produtoId);
+                    //if(produto is null)
+                    //{
+                    //    return NotFound("Produto não encontrado");
+                    //}
+
+                    //var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
+
+                    //if (itemExistente != null)
+                    //{
+
+                    //    itemExistente.Quantidade += ;
+
+                    //}
+                    //else
+                    //{
+                    //    var vendaItens = new ItensVenda
+                    //        {
+                    //            ProdutoId = produto.Id,
+                    //            Nome = produto.Nome,
+                    //            Quantidade = Quantidade,
+                    //            PrecoVenda = produto.PrecoVenda
+                    //        };
+
+
+
+                    //        VendaLista.Add(vendaItens);
+                    //        HttpContext.Session.Set("VendaLista", VendaLista);
+
+                    //}
+                    ////if (produto != null)
+                    ////{
+                    ////    var vendaItens = new ItensVenda
+                    ////    {
+                    ////        ProdutoId = produto.Id,
+                    ////        Nome = produto.Nome,
+                    ////        Quantidade = Quantidade,
+                    ////        PrecoVenda = produto.PrecoVenda
+                    ////    };
+
+
+
+                    ////    VendaLista.Add(vendaItens);
+                    ////    HttpContext.Session.Set("VendaLista", VendaLista);
+                    ////}
+                    //return RedirectToAction("Create");
+                }
     }
 }

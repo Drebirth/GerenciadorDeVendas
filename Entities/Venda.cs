@@ -14,6 +14,7 @@ public class Venda
     public string? NomeCliente {get;set;}
     public List<ItensVenda>? Itens {get;set;} = new List<ItensVenda>();
     public List<Produto>? Produtos { get; set; }
+    public int? Quantidade { get; set; }
     public int? produtoId { get; set; }
 
 
