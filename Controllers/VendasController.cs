@@ -22,10 +22,12 @@ namespace Gerenciador_De_Vendas.Controllers
 
         // GET: Vendas
         public async Task<IActionResult> Index()
-        {   
-            var itens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
-            Venda venda = new Venda();
-            venda.Itens = itens;
+        {
+            //var itens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
+            //Venda venda = new Venda();
+            //venda.Itens = itens;
+
+            var venda = _context.Vendas.ToList();
             return View(venda);
         }
 
@@ -69,10 +71,23 @@ namespace Gerenciador_De_Vendas.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ValorTotal,Emissao,NomeCliente")] Venda venda)
         {
+            ItensVenda itens = new ItensVenda();
             if (ModelState.IsValid)
             {
+
                 _context.Add(venda);
                 await _context.SaveChangesAsync();
+
+                var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
+
+                foreach (var itenslista in listaItens)
+                {
+                    itens = itenslista;
+                    itens.VendaId = venda.Id;
+                    _context.Itens.Add(itens);
+                    _context.SaveChanges();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(venda);
@@ -175,6 +190,17 @@ namespace Gerenciador_De_Vendas.Controllers
             var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
 
             var produto = _context.Produtos.Find(produtoId);
+            if (produto.Saldo_Estoque < Quantidade)
+            {
+                ModelState.AddModelError("Quantidade", $"Não é possível incluir a quantidade: {Quantidade}, pois não há estoque suficiente");
+                return RedirectToAction("Create");
+            }
+
+                if (ModelState.IsValid)
+            { 
+
+             
+
             // itemExistente é o item que já existe na lista de vendas
             var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
             /*
@@ -204,6 +230,7 @@ namespace Gerenciador_De_Vendas.Controllers
                     VendaLista.Add(vendaItens);
                     HttpContext.Session.Set("VendaLista", VendaLista);
                 }
+            }
             }
             return RedirectToAction("Create");
 

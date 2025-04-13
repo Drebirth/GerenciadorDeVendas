@@ -25,19 +25,22 @@
                 <span asp-validation-for="produtoId" class="text-danger"></span>
             </div>
             <div>
+                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                <validation-summary model-only="true" class="text-danger"></validation-summary>
                 <label class="control-label">Quantidade</label>
                 <input asp-for="Quantidade" class="form-control" />
+                <span asp-validation-for="Quantidade" class="text-danger"></span>
             </div>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ValorTotal" class="control-label"></label>
-                <input asp-for="ValorTotal" class="form-control" value="@Model.ValorTotal" type="number" readonly />
-                <span asp-validation-for="ValorTotal" class="text-danger"></span>
+                <input type="submit" value="Adicionar Produto" class="btn btn-primary" />
             </div>
+        </form>
+        <form method="post" asp-action="Create">
+               
             <div class="form-group">
                 <label asp-for="Emissao" class="control-label"></label>
-                <input asp-for="Emissao" class="form-control" />
+                <input asp-for="Emissao" class="form-control" type="date" value="@DateTime.Now"/>
                 <span asp-validation-for="Emissao" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,9 +48,16 @@
                 <input asp-for="NomeCliente" class="form-control" />
                 <span asp-validation-for="NomeCliente" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input asp-for="ValorTotal" class="form-control" value="@Model.ValorTotal" hidden />
             </div>
+
+            <div>
+                <input type="submit" value="Concluir Venda" class="btn btn-primary"/>
+            </div>
+      
         </form>
     </div>
 </div>
@@ -93,6 +103,10 @@
     </tbody>
 </table>
 
+<div class="form-group">
+    <label>Valor Total da Venda</label>
+    <input asp-for="ValorTotal" class="form-control" value="@Model.ValorTotal" readonly />
+</div>
 
 <div>
     <a asp-action="Index">Back to List</a>

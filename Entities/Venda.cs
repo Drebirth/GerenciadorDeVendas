@@ -14,7 +14,9 @@ public class Venda
     public string? NomeCliente {get;set;}
     public List<ItensVenda>? Itens {get;set;} = new List<ItensVenda>();
     public List<Produto>? Produtos { get; set; }
+    //[Required(ErrorMessage = "A Quantidade do produto é obrigatório")]
     public int? Quantidade { get; set; }
+    //[Required(ErrorMessage = "O codigo do produto é obrigatório")]
     public int? produtoId { get; set; }
 
 
