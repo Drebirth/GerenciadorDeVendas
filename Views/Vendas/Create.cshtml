@@ -25,11 +25,14 @@
                 <span asp-validation-for="produtoId" class="text-danger"></span>
             </div>
             <div>
-                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-                <validation-summary model-only="true" class="text-danger"></validation-summary>
+                <div asp-validation-summary="All" class="text-danger"></div> 
+                @* <validation-summary model-only="true" class="text-danger"></validation-summary> *@
                 <label class="control-label">Quantidade</label>
                 <input asp-for="Quantidade" class="form-control" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>
+            </div>
+            <div>
+                <br />
             </div>
 
             <div class="form-group">

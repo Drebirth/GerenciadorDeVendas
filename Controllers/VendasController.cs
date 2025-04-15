@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Entities;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Gerenciador_De_Vendas.Migrations;
 
 namespace Gerenciador_De_Vendas.Controllers
 {
@@ -74,6 +75,15 @@ namespace Gerenciador_De_Vendas.Controllers
             ItensVenda itens = new ItensVenda();
             if (ModelState.IsValid)
             {
+                foreach(var produto in venda.Itens)
+                {
+
+                    var saldoEstoque = _context.Produtos.Find(produto.Id);
+                    //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
+                    _context.Entry(saldoEstoque).State = EntityState.Modified;
+                    produto.Saldo_Estoque -= venda.Quantidade;
+                    _context.SaveChanges();
+                }
 
                 _context.Add(venda);
                 await _context.SaveChangesAsync();
@@ -185,15 +195,16 @@ namespace Gerenciador_De_Vendas.Controllers
 
 
         // Toda modificação realizada seja remover ou adicionar o produto precisa passar novamente na session
-        public IActionResult Adicionar(int produtoId,int Quantidade, ItensVenda? venda)
+        public IActionResult Adicionar(int produtoId,int Quantidade, ItensVenda? Itensvenda, Venda? venda)
         {  // Se a venda for nula, inicializa a lista de vendas
             var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
 
             var produto = _context.Produtos.Find(produtoId);
             if (produto.Saldo_Estoque < Quantidade)
             {
+                venda.Quantidade = Quantidade;
                 ModelState.AddModelError("Quantidade", $"Não é possível incluir a quantidade: {Quantidade}, pois não há estoque suficiente");
-                return RedirectToAction("Create");
+                return View("Create", venda);
             }
 
                 if (ModelState.IsValid)
@@ -203,11 +214,17 @@ namespace Gerenciador_De_Vendas.Controllers
 
             // itemExistente é o item que já existe na lista de vendas
             var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
-            /*
-             * Tipos por Referência: Incluem objetos como classes (List<>, arrays, etc.). Quando você atribui um tipo por referência a outra variável,
-             * ambas as variáveis apontam para o mesmo objeto na memória. Alterações feitas através de uma variável serão refletidas na outra.
-             */
-            if (itemExistente != null)
+
+                //var saldoEstoque = produto;
+                //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
+                //_context.Entry(produto).State = EntityState.Modified;
+                //produto.Saldo_Estoque -= Quantidade;
+                //_context.SaveChanges();
+                /*
+                 * Tipos por Referência: Incluem objetos como classes (List<>, arrays, etc.). Quando você atribui um tipo por referência a outra variável,
+                 * ambas as variáveis apontam para o mesmo objeto na memória. Alterações feitas através de uma variável serão refletidas na outra.
+                 */
+                if (itemExistente != null)
             {
                 // Ponteiro? 
                 // já que itemExistente é igual a VendaLista, caso seja atualizada e passamos o novo valor a lista será atualizada também 
