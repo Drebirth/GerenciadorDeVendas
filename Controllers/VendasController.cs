@@ -73,31 +73,39 @@ namespace Gerenciador_De_Vendas.Controllers
         public async Task<IActionResult> Create([Bind("Id,ValorTotal,Emissao,NomeCliente")] Venda venda)
         {
             ItensVenda itens = new ItensVenda();
+            var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
             if (ModelState.IsValid)
             {
-                foreach(var produto in venda.Itens)
-                {
+                //foreach(var produto in teste)
+                //{
+                   
 
-                    var saldoEstoque = _context.Produtos.Find(produto.Id);
-                    //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
-                    _context.Entry(saldoEstoque).State = EntityState.Modified;
-                    produto.Saldo_Estoque -= venda.Quantidade;
-                    _context.SaveChanges();
-                }
+                //    var saldoEstoque = _context.Produtos.Find(produto.ProdutoId);
+                //    //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
+                //    _context.Entry(saldoEstoque).State = EntityState.Modified;
+                //    produto.Saldo_Estoque -= produto.Quantidade;
+                //    _context.SaveChanges();
+                //}
 
+                
                 _context.Add(venda);
                 await _context.SaveChangesAsync();
 
-                var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
+               // var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
 
                 foreach (var itenslista in listaItens)
                 {
                     itens = itenslista;
                     itens.VendaId = venda.Id;
+                    var estoque = _context.Produtos.Find(itens.ProdutoId);
+                    estoque.Saldo_Estoque -= itens.Quantidade;
+
                     _context.Itens.Add(itens);
                     _context.SaveChanges();
                 }
 
+                // Limpa a sessão após salvar a venda
+                HttpContext.Session.Remove("VendaLista");
                 return RedirectToAction(nameof(Index));
             }
             return View(venda);
