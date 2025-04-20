@@ -1,10 +1,12 @@
 using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Gerenciador_De_Vendas.Controllers;
 
+[Authorize]
 public class ProdutoController : Controller
 {
 

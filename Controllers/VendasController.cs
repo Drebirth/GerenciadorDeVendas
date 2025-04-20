@@ -9,9 +9,11 @@ using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Entities;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Gerenciador_De_Vendas.Migrations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gerenciador_De_Vendas.Controllers
 {
+    [Authorize]
     public class VendasController : Controller
     {
         private readonly AppDbContext _context;
@@ -249,6 +251,7 @@ namespace Gerenciador_De_Vendas.Controllers
                     {
                         ProdutoId = produto.Id,
                         Nome = produto.Nome,
+                           Descricao = produto.Descricao,
                         Quantidade = Quantidade,
                         PrecoVenda = produto.PrecoVenda
                     };
