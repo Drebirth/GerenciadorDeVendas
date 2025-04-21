@@ -73,5 +73,12 @@ namespace Gerenciador_De_Vendas.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Login", "Contas");
         }
+
+        [HttpGet]
+        [Route("AccessDenied")]
+        public IActionResult AcessDenied()
+        {
+            return View();
+        }
     }
 }

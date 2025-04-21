@@ -2,12 +2,34 @@
 @* @model Gerenciador_De_Vendas.Entities.Venda
  *@
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vendas";
 }
 
-<h1>Index</h1>
+<h1>Central de vendas</h1>
 
-<p>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Lista de produtos</h5>
+                <p class="card-text">Nesta rotina você pode está acessando todos produtos já cadastrado</p>
+                <a asp-action="Details" class="btn btn-primary">Pedidos de venda</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cadastrar produto</h5>
+                <p class="card-text">Nesta rotina você pode Cadastrar um novo produto</p>
+                <a asp-action="Create" class="btn btn-primary">Nova venda</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -26,25 +48,6 @@
         </tr>
     </thead>
     <tbody>
-@* @foreach (var item in Model.Itens) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecoVenda)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-} *@
-
 @foreach(var pedidos in Model)
 {
     <tr>
@@ -60,5 +63,5 @@
     </tr>
 
 }
-    </tbody>
+    </tbody> *@
 </table>

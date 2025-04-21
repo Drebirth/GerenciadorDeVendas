@@ -26,7 +26,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
     options.LoginPath = "/Contas/Login";
     options.LogoutPath = "/Contas/Logout";
@@ -54,6 +54,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Contas}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

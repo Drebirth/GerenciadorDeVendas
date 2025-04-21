@@ -1,36 +1,44 @@
-﻿@model Gerenciador_De_Vendas.Entities.Venda
+﻿@model IEnumerable<Gerenciador_De_Vendas.Entities.Venda>
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Pedidos de venda</h1>
 
-<div>
-    <h4>Venda</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ValorTotal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ValorTotal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Emissao)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Emissao)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeCliente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NomeCliente)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<p>
+    <a asp-action="Create">Nova venda</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeCliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Emissao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorTotal)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach(var pedidos in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => pedidos.NomeCliente)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => pedidos.Emissao)  
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => pedidos.ValorTotal)
+        </td>
+    </tr>
+
+}
+    </tbody> 
+</table>

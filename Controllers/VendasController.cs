@@ -30,25 +30,30 @@ namespace Gerenciador_De_Vendas.Controllers
             //Venda venda = new Venda();
             //venda.Itens = itens;
 
-            var venda = _context.Vendas.ToList();
-            return View(venda);
+            //var venda = _context.Vendas.ToList();
+            //return View(venda);
+            return View();
         }
 
         // GET: Vendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var venda = await _context.Vendas
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (venda == null)
-            {
-                return NotFound();
-            }
+            //var venda = await _context.Vendas
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (venda == null)
+            //{
+            //    return NotFound();
+            //}
 
+            //return View(venda);
+
+
+            var venda = _context.Vendas.ToList();
             return View(venda);
         }
 
@@ -210,6 +215,13 @@ namespace Gerenciador_De_Vendas.Controllers
             var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
 
             var produto = _context.Produtos.Find(produtoId);
+            if (produto == null)
+            {
+                ModelState.AddModelError("ProdutoId", $"Produto {produtoId} não encontrado, favor verificar o codigo correto no cadastro de produtos");
+                return View("Create", venda);
+
+            }
+
             if (produto.Saldo_Estoque < Quantidade)
             {
                 venda.Quantidade = Quantidade;
@@ -217,7 +229,7 @@ namespace Gerenciador_De_Vendas.Controllers
                 return View("Create", venda);
             }
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
             { 
 
              

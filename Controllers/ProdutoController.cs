@@ -36,15 +36,15 @@ public class ProdutoController : Controller
     }
 
     [HttpPost]
-    public ActionResult Edit()
+    public ActionResult Edit(Produto produto)
     {            
             
-        // if(ModelState.IsValid)
-        // {   
-        //     _context.Produtos.Update();
-        //     _context.SaveChanges();
-        //     return RedirectToAction("Index");
-        // }
+         if(ModelState.IsValid)
+         {   
+             _context.Produtos.Update(produto);
+             _context.SaveChanges();
+             return RedirectToAction("Index");
+         }
          return View();
     }
 
