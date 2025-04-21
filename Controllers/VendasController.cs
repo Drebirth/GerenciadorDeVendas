@@ -210,119 +210,54 @@ namespace Gerenciador_De_Vendas.Controllers
 
 
         // Toda modificação realizada seja remover ou adicionar o produto precisa passar novamente na session
-        public IActionResult Adicionar(int produtoId,int Quantidade, ItensVenda? Itensvenda, Venda? venda)
-        {  // Se a venda for nula, inicializa a lista de vendas
-            var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
-
+        public IActionResult Adicionar(int produtoId, int Quantidade, Venda? venda)
+        {
+            var vendaAtual = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
             var produto = _context.Produtos.Find(produtoId);
+
             if (produto == null)
             {
-                ModelState.AddModelError("ProdutoId", $"Produto {produtoId} não encontrado, favor verificar o codigo correto no cadastro de produtos");
+                ModelState.AddModelError("ProdutoId", $"Produto {produtoId} não encontrado.");
+                venda.Itens = vendaAtual;
+         
                 return View("Create", venda);
-
             }
-
             if (produto.Saldo_Estoque < Quantidade)
             {
-                venda.Quantidade = Quantidade;
-                ModelState.AddModelError("Quantidade", $"Não é possível incluir a quantidade: {Quantidade}, pois não há estoque suficiente");
+                ModelState.AddModelError("Quantidade", $"Quantidade solicitada {Quantidade} maior que o estoque disponível {produto.Saldo_Estoque}.");
+                venda.Itens = vendaAtual;
+            
                 return View("Create", venda);
             }
 
             if (ModelState.IsValid)
-            { 
-
-             
-
-            // itemExistente é o item que já existe na lista de vendas
-            var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
-
-                //var saldoEstoque = produto;
-                //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
-                //_context.Entry(produto).State = EntityState.Modified;
-                //produto.Saldo_Estoque -= Quantidade;
-                //_context.SaveChanges();
-                /*
-                 * Tipos por Referência: Incluem objetos como classes (List<>, arrays, etc.). Quando você atribui um tipo por referência a outra variável,
-                 * ambas as variáveis apontam para o mesmo objeto na memória. Alterações feitas através de uma variável serão refletidas na outra.
-                 */
-                if (itemExistente != null)
             {
-                // Ponteiro? 
-                // já que itemExistente é igual a VendaLista, caso seja atualizada e passamos o novo valor a lista será atualizada também 
-                // Se o item já existe, apenas atualiza a quantidade
-                itemExistente.Quantidade += Quantidade;
-                HttpContext.Session.Set("VendaLista", VendaLista);
-                return RedirectToAction("Create");
-            }
-            else
-            {
-                if (produto != null)
+                var produtoVenda = vendaAtual.FirstOrDefault(x => x.ProdutoId == produtoId);
+                
+                if (produtoVenda != null)
                 {
-                    var vendaItens = new ItensVenda
-                    {
-                        ProdutoId = produto.Id,
-                        Nome = produto.Nome,
-                           Descricao = produto.Descricao,
-                        Quantidade = Quantidade,
-                        PrecoVenda = produto.PrecoVenda
-                    };
-                    VendaLista.Add(vendaItens);
-                    HttpContext.Session.Set("VendaLista", VendaLista);
+                    produtoVenda.Quantidade += Quantidade;
+                    HttpContext.Session.Set("VendaLista", vendaAtual);
                 }
-            }
+                else
+                {
+                    vendaAtual.Add(new ItensVenda
+                    {
+                        ProdutoId = produtoId,
+                        Nome = produto.Nome,
+                        Descricao = produto.Descricao,       
+                        PrecoVenda = produto.PrecoVenda,
+                        Quantidade = Quantidade
+                    });
+                    HttpContext.Session.Set("VendaLista", vendaAtual);
+                }
             }
             return RedirectToAction("Create");
 
+            
+           
+            
 
-                    //var VendaLista = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
-
-                    //var produto = _context.Produtos.Find(produtoId);
-                    //if(produto is null)
-                    //{
-                    //    return NotFound("Produto não encontrado");
-                    //}
-
-                    //var itemExistente = VendaLista.FirstOrDefault(i => i.ProdutoId == produtoId);
-
-                    //if (itemExistente != null)
-                    //{
-
-                    //    itemExistente.Quantidade += ;
-
-                    //}
-                    //else
-                    //{
-                    //    var vendaItens = new ItensVenda
-                    //        {
-                    //            ProdutoId = produto.Id,
-                    //            Nome = produto.Nome,
-                    //            Quantidade = Quantidade,
-                    //            PrecoVenda = produto.PrecoVenda
-                    //        };
-
-
-
-                    //        VendaLista.Add(vendaItens);
-                    //        HttpContext.Session.Set("VendaLista", VendaLista);
-
-                    //}
-                    ////if (produto != null)
-                    ////{
-                    ////    var vendaItens = new ItensVenda
-                    ////    {
-                    ////        ProdutoId = produto.Id,
-                    ////        Nome = produto.Nome,
-                    ////        Quantidade = Quantidade,
-                    ////        PrecoVenda = produto.PrecoVenda
-                    ////    };
-
-
-
-                    ////    VendaLista.Add(vendaItens);
-                    ////    HttpContext.Session.Set("VendaLista", VendaLista);
-                    ////}
-                    //return RedirectToAction("Create");
-                }
+        }
     }
 }
