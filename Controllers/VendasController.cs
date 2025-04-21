@@ -219,14 +219,16 @@ namespace Gerenciador_De_Vendas.Controllers
             {
                 ModelState.AddModelError("ProdutoId", $"Produto {produtoId} não encontrado.");
                 venda.Itens = vendaAtual;
-         
+                venda.ValorTotal = vendaAtual.ToList().Sum(x => x.SubTotal);
+
                 return View("Create", venda);
             }
             if (produto.Saldo_Estoque < Quantidade)
             {
                 ModelState.AddModelError("Quantidade", $"Quantidade solicitada {Quantidade} maior que o estoque disponível {produto.Saldo_Estoque}.");
                 venda.Itens = vendaAtual;
-            
+                venda.ValorTotal = vendaAtual.ToList().Sum(x => x.SubTotal);
+           
                 return View("Create", venda);
             }
 
