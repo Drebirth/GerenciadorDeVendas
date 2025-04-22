@@ -227,6 +227,7 @@ namespace Gerenciador_De_Vendas.Controllers
             {
                 ModelState.AddModelError("Quantidade", $"Quantidade solicitada {Quantidade} maior que o estoque disponível {produto.Saldo_Estoque}.");
                 venda.Itens = vendaAtual;
+                // atualiza o valor total
                 venda.ValorTotal = vendaAtual.ToList().Sum(x => x.SubTotal);
            
                 return View("Create", venda);
@@ -238,6 +239,7 @@ namespace Gerenciador_De_Vendas.Controllers
                 
                 if (produtoVenda != null)
                 {
+                    // Se o produto já existe na lista, apenas atualiza a quantidade
                     produtoVenda.Quantidade += Quantidade;
                     HttpContext.Session.Set("VendaLista", vendaAtual);
                 }
