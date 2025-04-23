@@ -26,33 +26,13 @@ namespace Gerenciador_De_Vendas.Controllers
         // GET: Vendas
         public async Task<IActionResult> Index()
         {
-            //var itens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
-            //Venda venda = new Venda();
-            //venda.Itens = itens;
-
-            //var venda = _context.Vendas.ToList();
-            //return View(venda);
             return View();
         }
 
         // GET: Vendas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var venda = await _context.Vendas
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (venda == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(venda);
-
-
+            
             var venda = _context.Vendas.ToList();
             return View(venda);
         }
@@ -73,32 +53,16 @@ namespace Gerenciador_De_Vendas.Controllers
         }
 
         // POST: Vendas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ValorTotal,Emissao,NomeCliente")] Venda venda)
+        public async Task<IActionResult> Create(Venda venda)
         {
             ItensVenda itens = new ItensVenda();
             var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
             if (ModelState.IsValid)
             {
-                //foreach(var produto in teste)
-                //{
-                   
-
-                //    var saldoEstoque = _context.Produtos.Find(produto.ProdutoId);
-                //    //// Entry é um método do Entity Framework que permite rastrear o estado de uma entidade
-                //    _context.Entry(saldoEstoque).State = EntityState.Modified;
-                //    produto.Saldo_Estoque -= produto.Quantidade;
-                //    _context.SaveChanges();
-                //}
-
-                
+                             
                 _context.Add(venda);
                 await _context.SaveChangesAsync();
-
-               // var listaItens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista");
 
                 foreach (var itenslista in listaItens)
                 {
@@ -135,11 +99,8 @@ namespace Gerenciador_De_Vendas.Controllers
         }
 
         // POST: Vendas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ValorTotal,Emissao,NomeCliente")] Venda venda)
+        public async Task<IActionResult> Edit(int id, Venda venda)
         {
             if (id != venda.Id)
             {
@@ -188,9 +149,8 @@ namespace Gerenciador_De_Vendas.Controllers
         }
 
         // POST: Vendas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
             var venda = await _context.Vendas.FindAsync(id);
             if (venda != null)
