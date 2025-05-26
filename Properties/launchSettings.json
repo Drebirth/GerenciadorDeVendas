@@ -32,6 +32,13 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "Produção": {
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "environmentVariables": {
+          "ASPNETCORE_ENVIRONMENT": "Production"
+        }
       }
     }
   }

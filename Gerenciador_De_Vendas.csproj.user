@@ -14,5 +14,6 @@
     <WebStackScaffolding_DbContextTypeFullName>Gerenciador_De_Vendas.Context.AppDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>C:\Users\Danie\Estudos\.Net\Meus_Projetos\Gerenciador_De_Vendas\Gerenciador_De_Vendas\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

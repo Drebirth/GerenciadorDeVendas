@@ -1,8 +1,16 @@
 using Gerenciador_De_Vendas.Context;
+using Gerenciador_De_Vendas.Repository;
+using Gerenciador_De_Vendas.Repository.Produtos;
+using Gerenciador_De_Vendas.Service.ProdutoService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+// Configura o carregamento dos arquivos de configura��o
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+                     .AddEnvironmentVariables();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -21,6 +29,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();
+ builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+ builder.Services.AddScoped<ProdutoService>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

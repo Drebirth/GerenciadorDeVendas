@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Entities;
+using Gerenciador_De_Vendas.Service.ProdutoService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -10,78 +12,73 @@ namespace Gerenciador_De_Vendas.Controllers;
 public class ProdutoController : Controller
 {
 
-    private readonly AppDbContext _context;
+    //private readonly AppDbContext _context;
+    private readonly ProdutoService _service;
 
-    public ProdutoController(AppDbContext context)
+    public ProdutoController(ProdutoService service/*AppDbContext context*/)
     {
-        _context = context;
+        //_context = context;
+        _service = service;
     }
 
-    public ActionResult Index()
+    public IActionResult Index()
     {
         return View();
     }
 
-    public IActionResult Details()
+    public async Task<IActionResult> GetAll()
     {
-        var produtos = _context.Produtos.ToList();
-        return View(produtos);
+        //var produtos = _context.Produtos.ToList();
+
+        return View(await _service.GetAllAsync());
     }
 
 
-    public ActionResult Edit(int id)
+    public async Task<IActionResult> Edit(int id)
     {   
-        var produto = _context.Produtos.Find(id);
-        return View(produto);
+        //var produto = _context.Produtos.Find(id);
+        return View(await _service.GetByIdAsync(id));
     }
 
     [HttpPost]
-    public ActionResult Edit(Produto produto)
-    {            
-            
-         if(ModelState.IsValid)
-         {   
-             _context.Produtos.Update(produto);
-             _context.SaveChanges();
-             return RedirectToAction("Index");
-         }
-         return View();
-    }
-
-    public ActionResult Create()
+    public async Task<IActionResult> Edit(Produto produto)
     {
-        return View();
-    }
-
-    [HttpPost]
-    public ActionResult Create(Produto produto)
-    {
-        
-         if(ModelState.IsValid)
-         {
-             _context.Produtos.Add(produto);
-             _context.SaveChanges();
-             return RedirectToAction("Index");
-         }
-        return View(produto);
-    }
-
-    public ActionResult Delete(int id)
-    {
-        var produto = _context.Produtos.Find(id);
-        if(produto is null)
+        if (ModelState.IsValid)
         {
-            return NotFound();
+            await _service.UpdateAsync(produto);
+            return RedirectToAction("Index");
         }
         return View(produto);
     }
 
-    [HttpPost]
-    public ActionResult Delete(Produto produto)
+    public IActionResult Create()
     {
-        var produtoDeletado = _context.Produtos.Find(produto.Id);
-        _context.Produtos.Remove(produtoDeletado);
-        _context.SaveChanges();
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create(Produto produto)
+    {
+        
+         if(ModelState.IsValid)
+         {
+            await _service.CreateAsync(produto);
+            return RedirectToAction("Index");
+         }
+        return View(produto);
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        
+        return View(await _service.GetByIdAsync(id));
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(Produto produto)
+    {
+        
+        await _service.DeleteAsync(produto);
         return RedirectToAction(nameof(Index));
     }
 }
