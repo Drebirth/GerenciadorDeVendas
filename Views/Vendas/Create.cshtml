@@ -8,15 +8,14 @@
 <hr />
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Adicionar">
+        <form asp-action="AdicionarItem">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <label class="control-label">Pesquisar Produto</label>
+                <label class="control-label" asp-for="produtoId">Pesquisar Produto</label>
                 <input asp-for="produtoId" type="text" class="form-control" />
                 <span asp-validation-for="produtoId" class="text-danger"></span>
             </div>
-            <div>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+            <div>                
                 <label class="control-label">Quantidade</label>
                 <input asp-for="Quantidade" class="form-control" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>

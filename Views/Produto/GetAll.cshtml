@@ -10,7 +10,8 @@
         <th class="col">@Html.DisplayNameFor(model => model.Id)</th>
         <th class="col">@Html.DisplayNameFor(model => model.Nome)</th>
         <th class="col">@Html.DisplayNameFor(model => model.Descricao)</th>
-        <th class="col">@Html.DisplayNameFor(model => model.Saldo_Estoque)</th>
+        <th class="col">@Html.DisplayNameFor(model => model.Saldo_Estoque)</th>        
+        <th class="col">@Html.DisplayNameFor(model => model.Quantidade_Reservada)</th>
         <th class="col">@Html.DisplayNameFor(model => model.Inclusao_Produto)</th>
         <th class="col">@Html.DisplayNameFor(model => model.PrecoCompra)</th>
         <th class="col">@Html.DisplayNameFor(model => model.PrecoVenda)</th>
@@ -23,7 +24,7 @@
         <td class="col">@Html.DisplayFor(model => produto.Nome)</td>
         <td class="col">@Html.DisplayFor(model => produto.Descricao)</td>
         <td class="col">@Html.DisplayFor(model => produto.Saldo_Estoque)</td>
-        
+        <td class="col">@Html.DisplayFor(model => produto.Quantidade_Reservada)</td>
         <td class="col" type="Data">@Html.DisplayFor(model => produto.Inclusao_Produto)</td>
         <td class="col">@Html.DisplayFor(model => produto.PrecoCompra)</td>
         <td class="col">@Html.DisplayFor(model => produto.PrecoVenda)</td>

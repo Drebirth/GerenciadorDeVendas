@@ -10,13 +10,14 @@ public class Venda
     public int Id {get;set;}
 
     public decimal? ValorTotal  {get;set;}
-    public DateTime Emissao {get;set;}
+    //[Required(ErrorMessage = "A Data de Emissao e obrigatoria")]
+    public DateTime Emissao { get; set; }
     public string? NomeCliente {get;set;}
     public List<ItensVenda>? Itens {get;set;} = new List<ItensVenda>();
     public List<Produto>? Produtos { get; set; }
-    //[Required(ErrorMessage = "A Quantidade do produto é obrigatório")]
+    //[Required(ErrorMessage = "A Quantidade do produto e obrigatorio")]
     public int? Quantidade { get; set; }
-    //[Required(ErrorMessage = "O codigo do produto é obrigatório")]
+    //[Required(ErrorMessage = "O codigo do produto Ã© obrigatorio")]
     public int? produtoId { get; set; }
 
 

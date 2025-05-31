@@ -1,7 +1,10 @@
 using Gerenciador_De_Vendas.Context;
 using Gerenciador_De_Vendas.Repository;
+using Gerenciador_De_Vendas.Repository.ItensVendas;
 using Gerenciador_De_Vendas.Repository.Produtos;
+using Gerenciador_De_Vendas.Repository.Vendas;
 using Gerenciador_De_Vendas.Service.ProdutoService;
+using Gerenciador_De_Vendas.Service.VendaService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,14 +32,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
         .AddEntityFrameworkStores<AppDbContext>();
- builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
- builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<IItensVendaRepository, ItensVendaRepository>();
+builder.Services.AddScoped<IVendaRepository, VendaRepository>();
+builder.Services.AddScoped<ProdutoService>();
+builder.Services.AddScoped<VendaService>();
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
 
     options.LoginPath = "/Contas/Login";
     options.LogoutPath = "/Contas/Logout";
