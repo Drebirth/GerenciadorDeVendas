@@ -3,6 +3,7 @@ using Gerenciador_De_Vendas.Repository;
 using Gerenciador_De_Vendas.Repository.ItensVendas;
 using Gerenciador_De_Vendas.Repository.Produtos;
 using Gerenciador_De_Vendas.Repository.Vendas;
+using Gerenciador_De_Vendas.Service.FinancasAPI;
 using Gerenciador_De_Vendas.Service.ProdutoService;
 using Gerenciador_De_Vendas.Service.VendaService;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,15 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Consumir API
+builder.Services.AddHttpClient("CategoriaAPI", client =>
+{
+   client.BaseAddress = new Uri(builder.Configuration["ServiceUri:CategoriaAPI"]);
+});
+
+
+
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -37,6 +47,8 @@ builder.Services.AddScoped<IItensVendaRepository, ItensVendaRepository>();
 builder.Services.AddScoped<IVendaRepository, VendaRepository>();
 builder.Services.AddScoped<ProdutoService>();
 builder.Services.AddScoped<VendaService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<IAutenticacao, Autenticacao>();
 
 
 builder.Services.ConfigureApplicationCookie(options =>

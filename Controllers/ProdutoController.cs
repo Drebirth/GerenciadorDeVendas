@@ -29,7 +29,7 @@ public class ProdutoController : Controller
     public async Task<IActionResult> GetAll()
     {
         //var produtos = _context.Produtos.ToList();
-
+        
         return View(await _service.GetAllAsync());
     }
 

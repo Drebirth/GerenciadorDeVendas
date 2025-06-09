@@ -38,7 +38,9 @@ namespace Gerenciador_De_Vendas.Controllers
         // GET: Vendas/Create
         public async Task<IActionResult> Create()
         {
+            
             var itens = HttpContext.Session.Get<List<ItensVenda>>("VendaLista") ?? new List<ItensVenda>();
+          //  _service.VerificarCookieReserva("VendaLista"); // Verifica se o cookie de reserva está ativo
             Venda venda = new Venda
             {
                 Itens = itens,

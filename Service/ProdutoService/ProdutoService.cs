@@ -1,7 +1,7 @@
 using Gerenciador_De_Vendas.Entities;
 using Gerenciador_De_Vendas.Repository.Produtos;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
+using Gerenciador_De_Vendas.Service.RemoverSessao;
 namespace Gerenciador_De_Vendas.Service.ProdutoService
 {
     public class ProdutoService
@@ -15,6 +15,9 @@ namespace Gerenciador_De_Vendas.Service.ProdutoService
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
+            RemoverSessao.RemoverSessao removerSessao = new RemoverSessao.RemoverSessao(new HttpContextAccessor());
+            removerSessao.Remover(); // Remove a sessão antes de buscar os produtos
+            
             return await _repository.GetAllAsync();
         }
 

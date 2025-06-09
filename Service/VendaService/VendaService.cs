@@ -98,7 +98,8 @@ namespace Gerenciador_De_Vendas.Service.VendaService
             if (context == null)
                 return;
 
-            var cookie = context.Request.Cookies[cookieName];
+            //var cookie = context.Request.Cookies[cookieName];
+            var cookie = context.Session.GetString(cookieName);
             if (string.IsNullOrEmpty(cookie))
             {
                 // Cookie expirou ou não existe, remover reservas
