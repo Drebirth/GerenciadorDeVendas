@@ -1,8 +1,19 @@
-@model IEnumerable<Gerenciador_De_Vendas.Entities.Produto>
+
 @{
     ViewData["title"] = "Produtos";
 }
 <!--Fazer um css centralizado com as opcoes -->
+<div class="jumbotron">
+    <h1 class="display-4">Modulo Produtos</h1>
+    <p class="lead">No modulo de produtos você pode conferir o estoque, incluir um produto ou mesmo verificar os produtos já cadastrados.</p>
+    <hr class="my-4">
+    @* <p>Ele usa classes utilitárias para tipografia e espaçamento de conteúdo, dentro do maior container.</p> *@
+    <a asp-action="GetAll" class="btn btn-primary">Todos os produtos</a>
+    <a asp-action="Create" class="btn btn-primary">Cadastrar produtos</a>
+
+</div>
+
+@* 
 <h1>Página inicial de produtos</h1>
 
 <div class="row">
@@ -24,4 +35,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> *@

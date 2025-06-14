@@ -29,7 +29,7 @@ public class ProdutoController : Controller
     public async Task<IActionResult> GetAll()
     {
         //var produtos = _context.Produtos.ToList();
-        
+        //_service.VerificarCookieReserva("VendaLista"); // Verifica se o cookie de reserva está ativo
         return View(await _service.GetAllAsync());
     }
 

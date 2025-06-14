@@ -58,9 +58,11 @@ namespace Gerenciador_De_Vendas.Service.VendaService
             if (produto == null)
                 return new AdicionarProdutoResult { Sucesso = false, Mensagem = "Produto não encontrado." };
 
-            if (produto.Saldo_Estoque < quantidade)
+            if ((produto.Saldo_Estoque - produto.Quantidade_Reservada)  < quantidade)
             {
-                return new AdicionarProdutoResult { Sucesso = false, Mensagem = $"Quantidade solicitada ({quantidade}) é maior que o estoque disponível ({produto.Saldo_Estoque})." };
+
+                return new AdicionarProdutoResult { Sucesso = false, Mensagem = $"Quantidade solicitada ({quantidade}) é maior que o estoque disponível ({produto.Saldo_Estoque}).", venda = vendaAtual };
+                 
             }
             else
             {

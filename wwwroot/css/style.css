@@ -2,3 +2,13 @@
     width: 1140px;
     
 }
+
+.d-block w-100 {
+    width: 400px;
+    height: 800px;
+}
+
+.imagemCar {
+    width: 200px;
+    height: 400px;
+}
