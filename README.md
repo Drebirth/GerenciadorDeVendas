@@ -15,7 +15,8 @@ O **Gerenciador De Vendas** é uma aplicação web desenvolvida em ASP.NET Core 
 - Razor Pages
 - Entity Framework Core
 - Identity para autenticação
-- SQL Server (ou outro banco relacional)
+- SQL Server
+- SQLite
 
 ## Estrutura de Pastas
 - `Controllers/` — Lógica de controle das páginas e APIs
