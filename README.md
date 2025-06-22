@@ -1,7 +1,7 @@
 # Gerenciador De Vendas
 
 ## Descrição
-O **Gerenciador De Vendas** é uma aplicação web desenvolvida em ASP.NET Core (.NET 8) com Razor Pages, voltada para o gerenciamento de produtos, vendas e controle de estoque. O sistema permite cadastrar, editar, remover e listar produtos, além de realizar vendas, controlar reservas de estoque e gerenciar usuários com autenticação.
+O **Gerenciador De Vendas** é uma aplicação web desenvolvida em ASP.NET Core (.NET 8) com Razor Pages, voltada para o gerenciamento de produtos, vendas e controle de estoque. O sistema permite cadastrar, editar, remover e listar produtos, além de realizar vendas, controlar reservas de estoque.
 
 ## Funcionalidades Principais
 - Cadastro, edição e exclusão de produtos
