@@ -27,7 +27,10 @@ O **Gerenciador De Vendas** é uma aplicação web desenvolvida em ASP.NET Core 
 - `wwwroot/` — Arquivos estáticos (CSS, JS, imagens)
 
 ## Como Executar Localmente
-1. Clone o repositório:git clone <url-do-repositorio>2. Navegue até a pasta do projeto:cd Gerenciador_De_Vendas/Gerenciador_De_Vendas3. Restaure os pacotes:dotnet restore4. Atualize a string de conexão do banco de dados em `appsettings.json` se necessário.
+1. Clone o repositório:git clone <url-do-repositorio>
+2. Navegue até a pasta do projeto:cd Gerenciador_De_Vendas/Gerenciador_De_Vendas
+3. Restaure os pacotes:dotnet restore
+4. Atualize a string de conexão do banco de dados em `appsettings.json` se necessário.
 5. Execute as migrações para criar o banco:dotnet ef database update6. Rode a aplicação:dotnet run7. Acesse via navegador: `https://localhost:5001` ou `http://localhost:5000`
 
 ## Observações
